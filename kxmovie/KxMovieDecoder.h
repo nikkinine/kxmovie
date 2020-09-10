@@ -9,7 +9,7 @@
 //  this file is part of KxMovie
 //  KxMovie is licenced under the LGPL v3, see lgpl-3.0.txt
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 
 extern NSString * kxmovieErrorDomain;
@@ -82,7 +82,7 @@ typedef enum {
 @property (readonly, nonatomic, strong) NSString *text;
 @end
 
-typedef BOOL(^KxMovieDecoderInterruptCallback)();
+typedef BOOL(^KxMovieDecoderInterruptCallback)(void);
 
 @protocol KxMovieIOStream<NSObject>
 

@@ -239,8 +239,8 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
     _numBytesPerSample = _outputFormat.mBitsPerChannel / 8;
     _numOutputChannels = _outputFormat.mChannelsPerFrame;
     
-    LoggerAudio(2, @"Current output bytes per sample: %ld", _numBytesPerSample);
-    LoggerAudio(2, @"Current output num channels: %ld", _numOutputChannels);
+	LoggerAudio(2, @"Current output bytes per sample: %u", (unsigned int)_numBytesPerSample);
+	LoggerAudio(2, @"Current output num channels: %u", (unsigned int)_numOutputChannels);
             
     // Slap a render callback on the unit
     AURenderCallbackStruct callbackStruct;
@@ -276,7 +276,7 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
                    "Checking number of output channels"))
         return NO;
     
-    LoggerAudio(2, @"We've got %lu output channels", newNumChannels);
+	LoggerAudio(2, @"We've got %u output channels", (unsigned int)newNumChannels);
     
     // Get the hardware sampling rate. This is settable, but here we're only reading.
     size = sizeof(_samplingRate);
@@ -329,9 +329,6 @@ static OSStatus renderCallback (void *inRefCon, AudioUnitRenderActionFlags	*ioAc
         }
         else if (_numBytesPerSample == 2) // then we need to convert SInt16 -> Float (and also scale)
         {
-//            dumpAudioSamples(@"Audio frames decoded by FFmpeg:\n",
-//                             _outData, @"% 12.4f ", numFrames, _numOutputChannels);
-
             float scale = (float)INT16_MAX;
             vDSP_vsmul(_outData, 1, &scale, _outData, 1, numFrames*_numOutputChannels);
             
@@ -525,8 +522,6 @@ static BOOL checkError(OSStatus error, const char *operation)
 		sprintf(str, "%d", (int)error);
     
 	LoggerStream(0, @"Error: %s (%s)\n", operation, str);
-    
-	//exit(1);
     
     return YES;
 }
